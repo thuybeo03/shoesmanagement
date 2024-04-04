@@ -21,7 +21,7 @@ public interface GiayService {
 
     public Giay getByName(String name);
 
-    public java.util.List<Giay> fillterGiay(String searchTerm);
+    public List<Giay> fillterGiay(String searchTerm);
 
     public void importDataFromExcel(InputStream excelFile);
 
