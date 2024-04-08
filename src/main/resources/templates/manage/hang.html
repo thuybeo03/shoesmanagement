@@ -10,7 +10,7 @@
     <meta name="robots" content="noindex, nofollow">
     <title>Sneaker Shop - Admin</title>
 
-    <link rel="shortcut icon" type="image/x-icon"  href="/images/img/icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/images/img/icon.png">
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 
@@ -94,7 +94,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/manage/thongke"><img src="/images/img/icons/dashboard.svg" alt="img"><span> Thống Kê</span>
+                        <a href="/manage/thongke"><img src="/images/img/icons/dashboard.svg"
+                                                       alt="img"><span> Thống Kê</span>
                         </a>
                     </li>
                     <li class="submenu">
@@ -165,7 +166,6 @@
         </div>
     </div>
 
-
     <div class="page-wrapper">
         <div class="content">
             <div class="page-header">
@@ -183,7 +183,8 @@
             <div class="card">
                 <div class="card-body">
                     <div class="hidden-form" style="display: none">
-                        <form th:object="${hangAdd}" method="post" th:action="@{/manage/hang/viewAdd/add}" enctype="multipart/form-data" onsubmit="return validateHangForm()" name="hangForm">
+                        <form th:object="${hangAdd}" method="post" th:action="@{/manage/hang/viewAdd/add}"
+                              enctype="multipart/form-data" onsubmit="return validateHangForm()" name="hangForm">
                             <div class="row">
                                 <div class="col-lg-6 col-sm-6 col-12">
                                     <div class="form-group">
@@ -198,13 +199,13 @@
                                 <div class="col-lg-2 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label>Mã Hãng</label><br><br>
-                                        <input type="text" name="maHang" >
+                                        <input type="text" name="maHang">
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label>Tên Hãng</label><br><br>
-                                        <input type="text" name="tenHang" >
+                                        <input type="text" name="tenHang">
                                     </div>
                                 </div>
                                 <!--                                <div class="col-lg-6 col-sm-6 col-12">-->
@@ -576,7 +577,7 @@
 </script>
 <script>
     // In your Javascript (external .js resource or <script> tag)
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('.select').select2();
     });
 </script>
@@ -613,6 +614,7 @@
         }
         return true;
     }
+
     function showAlert(message) {
         alertify.alert(message).setting({
             'title': 'Thông báo',
