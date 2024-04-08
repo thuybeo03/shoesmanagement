@@ -11,6 +11,7 @@ import java.util.UUID;
 @Repository
 public interface MauSacRepository extends JpaRepository<MauSac, UUID> {
 
+
     List<MauSac> findByTrangThai(int trangThai);
 
     List<MauSac> findByMaMauOrTenMau(String maMau, String tenMau);

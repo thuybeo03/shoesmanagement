@@ -1,6 +1,8 @@
 package com.example.shoesmanagement.repository;
 
+
 import com.example.shoesmanagement.model.ChiTietGiay;
+
 import com.example.shoesmanagement.model.Size;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,6 +13,7 @@ import java.util.UUID;
 
 @Repository
 public interface SizeRepository extends JpaRepository<Size, UUID> {
+
 
     List<Size> findByTrangThai(int trangThai);
 
