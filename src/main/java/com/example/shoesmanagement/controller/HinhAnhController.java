@@ -1,6 +1,8 @@
 package com.example.shoesmanagement.controller;
 
 import com.example.shoesmanagement.model.HinhAnh;
+import com.example.shoesmanagement.repository.HinhAnhRepository;
+import com.example.shoesmanagement.service.HinhAnhService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

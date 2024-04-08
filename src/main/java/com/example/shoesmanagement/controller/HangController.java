@@ -3,6 +3,9 @@ package com.example.shoesmanagement.controller;
 
 import com.example.shoesmanagement.model.Giay;
 import com.example.shoesmanagement.model.Hang;
+import com.example.shoesmanagement.repository.HangRepository;
+import com.example.shoesmanagement.service.GiayService;
+import com.example.shoesmanagement.service.HangService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
