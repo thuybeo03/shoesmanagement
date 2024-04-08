@@ -10,7 +10,7 @@
     <meta name="robots" content="noindex, nofollow">
     <title>Sneaker Shop - Admin</title>
 
-    <link rel="shortcut icon" type="image/x-icon" href="/images/img/icon.png">
+    <link rel="shortcut icon" type="image/x-icon"  href="/images/img/icon.png">
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 
@@ -22,7 +22,6 @@
 
     <link rel="stylesheet" href="/plugins/fontawesome/css/fontawesome.min.css">
     <link rel="stylesheet" href="/plugins/fontawesome/css/all.min.css">
-
     <link rel="stylesheet" href="/plugins/toastr/toatr.css"/>
 
     <link rel="stylesheet" href="/css/style.css">
@@ -73,6 +72,7 @@
             <span></span>
             </span>
         </a>
+
         <div class="dropdown mobile-user-menu">
             <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
                aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
@@ -84,6 +84,7 @@
         </div>
 
     </div>
+
     <div class="sidebar" id="sidebar">
         <div class="sidebar-inner slimscroll">
             <div id="sidebar-menu" class="sidebar-menu">
@@ -100,9 +101,9 @@
                         <a href="javascript:void(0);"><img src="/images/img/icons/product.svg" alt="img"><span> Quản lý Giày</span>
                             <span class="menu-arrow"></span></a>
                         <ul>
-                            <li><a href="/manage/chat-lieu" class="active">Chất Liệu</a></li>
+                            <li><a href="/manage/chat-lieu">Chất Liệu</a></li>
                             <li><a href="/manage/giay">Giày</a></li>
-                            <li><a href="/manage/hang">Hãng</a></li>
+                            <li><a href="/manage/hang" class="active">Hãng</a></li>
                             <li><a href="/manage/hinh-anh">Hình Ảnh</a></li>
                             <li><a href="/manage/mau-sac">Màu Sắc</a></li>
                             <li><a href="/manage/size">Size</a></li>
@@ -163,16 +164,18 @@
             </div>
         </div>
     </div>
+
+
     <div class="page-wrapper">
         <div class="content">
             <div class="page-header">
                 <div class="page-title">
-                    <h4>List Chất Liệu</h4>
+                    <h4>List Hãng</h4>
                     <h6>Quản Lý Giày</h6>
                 </div>
                 <div class="page-btn">
                     <button class="btn btn-added" id="show-form-button">
-                        <img src="/images/img/icons/plus.svg" class="me-1" alt="img">Thêm Chất Liệu
+                        <img src="/images/img/icons/plus.svg" class="me-1" alt="img">Thêm Hãng
                     </button>
                 </div>
             </div>
@@ -180,26 +183,28 @@
             <div class="card">
                 <div class="card-body">
                     <div class="hidden-form" style="display: none">
-                        <form th:object="${chatLieuAdd}" method="post" th:action="@{/manage/chat-lieu/viewAdd/add}" onsubmit="return validateChatLieuForm()" name="chatLieuForm">
+                        <form th:object="${hangAdd}" method="post" th:action="@{/manage/hang/viewAdd/add}" enctype="multipart/form-data" onsubmit="return validateHangForm()" name="hangForm">
                             <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label>Logo</label>
+                                        <input name="logoHang" type="file" id="imageInput" accept="image/*"
+                                               onchange="previewImage(event)">
+                                        <br><br><img id="imagePreview" src="#" alt="Ảnh mô tả"
+                                                     style="display: none; max-width: 150px; max-height: 150px;">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-12"></div>
                                 <div class="col-lg-2 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label>Mã Chất Liệu</label>
-                                        <input type="text" th:field="*{maChatLieu}">
-                                        <br><br>
-                                        <strong th:if="${#fields.hasErrors('maChatLieu')}"
-                                                class="alert alert-danger alert-dismissible fade show"
-                                                role="alert" th:errors="*{maChatLieu}"></strong>
+                                        <label>Mã Hãng</label><br><br>
+                                        <input type="text" name="maHang" >
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label>Tên Chất Liệu</label>
-                                        <input type="text" th:field="*{tenChatLieu}">
-                                        <br><br>
-                                        <strong th:if="${#fields.hasErrors('tenChatLieu')}"
-                                                class="alert alert-danger alert-dismissible fade show"
-                                                role="alert" th:errors="*{tenChatLieu}"></strong>
+                                        <label>Tên Hãng</label><br><br>
+                                        <input type="text" name="tenHang" >
                                     </div>
                                 </div>
                                 <!--                                <div class="col-lg-6 col-sm-6 col-12">-->
@@ -219,7 +224,7 @@
                     </div>
                     <br>
                     <div class="form-hidden-2" style="display: none">
-                        <form action="/manage/chatLieu/import" method="post" enctype="multipart/form-data">
+                        <form action="/manage/hang/import" method="post" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label> Upload Excel File</label>
                                 <input type="file" name="file" onchange="displaySelectedFileName()"/>
@@ -251,12 +256,12 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a th:href="@{/manage/chatLieu/export/pdf}" data-bs-toggle="tooltip"
+                                    <a th:href="@{/manage/hang/export/pdf}" data-bs-toggle="tooltip"
                                        data-bs-placement="top" title="pdf"><img
                                             src="/images/img/icons/pdf.svg" alt="img"></a>
                                 </li>
                                 <li>
-                                    <a th:href="@{/manage/chatLieu/export/excel}" data-bs-toggle="tooltip"
+                                    <a th:href="@{/manage/hang/export/excel}" data-bs-toggle="tooltip"
                                        data-bs-placement="top" title="excel"><img
                                             src="/images/img/icons/excel.svg" alt="img"></a>
                                 </li>
@@ -269,25 +274,25 @@
                         </div>
                     </div>
 
-                    <form method="get" th:action="@{/manage/chatLieu/filter}">
+                    <form method="get" th:action="@{/manage/hang/filter}">
                         <div class="card" id="filter_inputs">
                             <div class="card-body pb-0">
                                 <div class="row">
                                     <div class="col-lg-2 col-sm-6 col-12">
                                         <div class="form-group">
-                                            <select class="select" id="chatLieuFilterMa">
-                                                <option>Mã Chất Liệu</option>
-                                                <option th:each="loc : ${chatLieu}" th:value="${loc.maChatLieu}"
-                                                        th:text="${loc.maChatLieu}"></option>
+                                            <select class="select" id="hangFilterMa" name="maHang">
+                                                <option>Mã Hãng</option>
+                                                <option th:each="loc : ${hang}" th:value="${loc.maHang}"
+                                                        th:text="${loc.maHang}"></option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-2 col-sm-6 col-12">
                                         <div class="form-group">
-                                            <select class="select" id="chatLieuFilterTen">
-                                                <option>Tên Chất Liệu</option>
-                                                <option th:each="loc : ${chatLieu}" th:value="${loc.tenChatLieu}"
-                                                        th:text="${loc.tenChatLieu}"></option>
+                                            <select class="select" id="hangFilterTen" name="tenHang">
+                                                <option>Tên Hãng</option>
+                                                <option th:each="loc : ${hang}" th:value="${loc.tenHang}"
+                                                        th:text="${loc.tenHang}"></option>
                                             </select>
                                         </div>
                                     </div>
@@ -316,8 +321,9 @@
                         <table class="table datanew" id="data-table">
                             <thead>
                             <tr>
-                                <th>Mã Chất Liệu</th>
-                                <th>Tên Chất Liệu</th>
+                                <th>Logo</th>
+                                <th>Mã Hãng</th>
+                                <th>Tên Hãng</th>
                                 <th>Trạng Thái</th>
                                 <th>Action</th>
                                 <th>Thời Gian Thêm</th>
@@ -326,20 +332,22 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="items : ${chatLieu}">
-                                <td th:text="${items.maChatLieu}"></td>
-                                <td th:text="${items.tenChatLieu}"></td>
+                            <tr th:each="items : ${hang}">
+                                <td><img width="80px" height="90px"
+                                         th:src="@{'/images/logoBrands/'+ ${items.logoHang}}"></td>
+                                <td th:text="${items.maHang}"></td>
+                                <td th:text="${items.tenHang}"></td>
                                 <td>
                                     <span th:if="${items.trangThai == 1}" class="badges bg-lightgreen">Hoạt Động</span>
                                     <span th:unless="${items.trangThai == 1}"
                                           class="badges bg-lightred">Không Hoạt Động</span>
                                 </td>
                                 <td>
-                                    <a class="me-3" th:href="@{'/manage/chat-lieu/viewUpdate/' + ${items.idChatLieu}}">
+                                    <a class="me-3" th:href="@{'/manage/hang/viewUpdate/' + ${items.idHang}}">
                                         <img src="/images/img/icons/edit.svg" alt="img">
                                     </a>
                                     <a class="me-3 delete-button"
-                                       th:data-delete-url="@{'/manage/chat-lieu/delete/' + ${items.idChatLieu}}">
+                                       th:data-delete-url="@{'/manage/hang/delete/' + ${items.idHang}}">
                                         <img src="/images/img/icons/delete.svg" alt="img">
                                     </a>
                                 </td>
@@ -362,25 +370,25 @@
         <div class="toast-message">Dữ liệu của bạn đã được cập nhật</div>
     </div>
 </div>
-<div th:if="${maChatLieuError}" id="warning1" class="toast-container toast-top-right">
+<div th:if="${maHangError}" id="warning1" class="toast-container toast-top-right">
     <div class="toast toast-error" aria-live="assertive" style="display: block;">
         <button type="button" class="toast-close-button" role="button"></button>
         <div class="toast-title">Error!</div>
-        <div class="toast-message">Mã không được bỏ trống trống.</div>
+        <div class="toast-message">Mã không được bỏ trống.</div>
     </div>
 </div>
-<div th:if="${tenChatLieuError}" id="warning2" class="toast-container toast-top-right">
+<div th:if="${tenHangError}" id="warning2" class="toast-container toast-top-right">
     <div class="toast toast-error" aria-live="assertive" style="display: block;">
         <button type="button" class="toast-close-button" role="button"></button>
         <div class="toast-title">Error!</div>
-        <div class="toast-message">Tên không được bỏ trống.</div>
+        <div class="toast-message">Tên hãng không được bỏ trống.</div>
     </div>
 </div>
 <div th:if="${Errormessage}" id="checkMa" class="toast-container toast-top-right">
     <div class="toast toast-error" aria-live="assertive" style="display: block;">
         <button type="button" class="toast-close-button" role="button"></button>
         <div class="toast-title">Error!</div>
-        <div class="toast-message">Mã Chất Liệu đã tồn tại.</div>
+        <div class="toast-message">Mã Hãng đã tồn tại.</div>
     </div>
 </div>
 <script src="/js/jquery-3.6.0.min.js"></script>
@@ -463,31 +471,31 @@
 <script>
     $(document).ready(function () {
         // Lắng nghe sự kiện thay đổi trong dropdown kích thước
-        $("#chatLieuFilterMa").change(function () {
-            var maChatLieu = $(this).val();
+        $("#hangFilterMa").change(function () {
+            var maHang = $(this).val();
 
             // Ẩn tất cả các dòng trong bảng
             $("#data-table tbody tr").hide();
 
             // Hiển thị các dòng có giá trị kích thước tương ứng
             $("#data-table tbody tr").each(function () {
-                var maColumn = $(this).find("td:eq(0)").text(); // Vị trí cột chứa giá trị kích thước
-                if (maColumn === maChatLieu || maChatLieu === "Mã Chất Liệu") {
+                var maColumn = $(this).find("td:eq(1)").text(); // Vị trí cột chứa giá trị kích thước
+                if (maColumn === maHang || maHang === "Mã Hãng") {
                     $(this).show();
                 }
             });
         });
         //
-        $("#chatLieuFilterTen").change(function () {
-            var tenChatLieu = $(this).val();
+        $("#hangFilterTen").change(function () {
+            var tenHang = $(this).val();
 
             // Ẩn tất cả các dòng trong bảng
             $("#data-table tbody tr").hide();
 
             // Hiển thị các dòng có giá trị kích thước tương ứng
             $("#data-table tbody tr").each(function () {
-                var tenColumn = $(this).find("td:eq(1)").text(); // Vị trí cột chứa giá trị kích thước
-                if (tenColumn === tenChatLieu || tenChatLieu === "Tên Chất Liệu") {
+                var tenColumn = $(this).find("td:eq(2)").text(); // Vị trí cột chứa giá trị kích thước
+                if (tenColumn === tenHang || tenHang === "Tên Hãng") {
                     $(this).show();
                 }
             });
@@ -519,6 +527,23 @@
             form2.style.display = "none";  // Ẩn form
         }
     });
+</script>
+<script>
+    function previewImage(event) {
+        const imageInput = document.getElementById('imageInput');
+        const imagePreview = document.getElementById('imagePreview');
+
+        if (imageInput.files && imageInput.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+            };
+
+            reader.readAsDataURL(imageInput.files[0]);
+        }
+    }
 </script>
 <script>
     setTimeout(function () {
@@ -556,34 +581,38 @@
     });
 </script>
 <script>
-    function validateChatLieuForm() {
-        var maChatLieu = document.forms["chatLieuForm"]["maChatLieu"].value;
-        var tenChatLieu = document.forms["chatLieuForm"]["tenChatLieu"].value;
+    function validateHangForm() {
+        var maHang = document.forms["hangForm"]["maHang"].value;
+        var tenHang = document.forms["hangForm"]["tenHang"].value;
+        var logoHang = document.forms["hangForm"]["logoHang"].value;
 
-        if (maChatLieu === "") {
-            showAlert("Vui lòng nhập Mã Chất Liệu");
+
+        if (maHang === "") {
+            showAlert("Vui lòng nhập Mã Hãng");
             return false;
         }
 
-        if (!maChatLieu.match(/^[a-zA-Z0-9]+$/)) {
-            showAlert("Mã Chất Liệu chỉ được chứa chữ cái và số");
+        if (!maHang.match(/^[a-zA-Z0-9]+$/)) {
+            showAlert("Mã Hãng chỉ được chứa chữ cái và số");
             return false;
         }
 
-        if (tenChatLieu === "") {
-            showAlert("Vui lòng nhập Tên Chất Liệu");
+        if (tenHang === "") {
+            showAlert("Vui lòng nhập Tên Hãng");
             return false;
         }
 
-        if (!tenChatLieu.match(/^[a-zA-Z0-9\s]+$/)) {
-            showAlert("Tên Chất Liệu chỉ được chứa chữ cái, số và khoảng trắng");
+        if (!tenHang.match(/^[a-zA-Z0-9]+$/)) {
+            showAlert("Tên Hãng chỉ được chứa chữ cái và số");
             return false;
         }
 
-
+        if (logoHang === "") {
+            showAlert("Vui lòng chọn Logo Hãng");
+            return false;
+        }
         return true;
     }
-
     function showAlert(message) {
         alertify.alert(message).setting({
             'title': 'Thông báo',
@@ -591,6 +620,5 @@
         }).show();
     }
 </script>
-
 </body>
 </html>
