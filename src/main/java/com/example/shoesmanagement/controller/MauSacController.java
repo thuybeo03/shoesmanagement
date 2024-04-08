@@ -21,7 +21,6 @@ public class MauSacController {
 
     @GetMapping("/mau-sac")
     public String hienThi(Model model) {
-        //model.addAttribute("mauSac", msRepo.findAll());
         model.addAttribute("mauSac", msSer.getALlMauSac());
         model.addAttribute("mauSacAdd", new MauSac());
         return "manage/mau-sac";

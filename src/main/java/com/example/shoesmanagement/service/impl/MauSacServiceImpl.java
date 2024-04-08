@@ -24,10 +24,10 @@ public class MauSacServiceImpl implements MauSacService {
         mauSacRepository.save(mauSac);
     }
 
-    @Override
-    public void deleteByIdMauSac(UUID id) {
-        mauSacRepository.deleteById(id);
-    }
+//    @Override
+//    public void deleteByIdMauSac(UUID id) {
+//        mauSacRepository.deleteById(id);
+//    }
 
     @Override
     public MauSac getByIdMauSac(UUID id) {

@@ -11,7 +11,7 @@ public interface MauSacService {
 
     public void save(MauSac mauSac);
 
-    public void deleteByIdMauSac(UUID id);
+    //public void deleteByIdMauSac(UUID id);
 
     public MauSac getByIdMauSac(UUID id);
 
