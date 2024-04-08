@@ -36,10 +36,11 @@ public class MauSac {
 
     @Column(name = "trang_Thai")
     private int trangThai;
+
     @Column(name = "tg_Them")
     private Date tgThem;
 
-    @Column(name = "tg_Tua")
+    @Column(name = "tg_Sua")
     private Date tgSua;
 
 }

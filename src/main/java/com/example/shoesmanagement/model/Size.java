@@ -1,8 +1,13 @@
 package com.example.shoesmanagement.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import lombok.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 import java.util.UUID;
@@ -14,7 +19,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Size {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_Size")
