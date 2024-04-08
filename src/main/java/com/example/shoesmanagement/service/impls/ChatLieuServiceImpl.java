@@ -1,8 +1,6 @@
 package com.example.shoesmanagement.service.impls;
 
 import com.example.shoesmanagement.model.ChatLieu;
-import com.example.shoesmanagement.repository.ChatLieuRepository;
-import com.example.shoesmanagement.service.ChatLieuService;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;

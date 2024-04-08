@@ -3,11 +3,6 @@ package com.example.shoesmanagement.controller;
 
 import com.example.shoesmanagement.model.Giay;
 import com.example.shoesmanagement.model.Hang;
-import com.example.shoesmanagement.repository.HangRepository;
-import com.example.shoesmanagement.service.GiayService;
-import com.example.shoesmanagement.service.HangService;
-import com.lowagie.text.DocumentException;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +13,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @RequestMapping("/manage")

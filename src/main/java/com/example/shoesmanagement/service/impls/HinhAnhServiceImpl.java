@@ -1,8 +1,6 @@
 package com.example.shoesmanagement.service.impls;
 
 import com.example.shoesmanagement.model.HinhAnh;
-import com.example.shoesmanagement.repository.HinhAnhRepository;
-import com.example.shoesmanagement.service.HinhAnhService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

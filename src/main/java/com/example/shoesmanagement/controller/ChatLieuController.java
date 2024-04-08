@@ -2,9 +2,6 @@ package com.example.shoesmanagement.controller;
 
 import com.example.shoesmanagement.model.ChatLieu;
 import com.example.shoesmanagement.model.Giay;
-import com.example.shoesmanagement.repository.ChatLieuRepository;
-import com.example.shoesmanagement.service.ChatLieuService;
-import com.example.shoesmanagement.service.GiayService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

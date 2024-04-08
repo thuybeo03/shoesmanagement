@@ -1,8 +1,6 @@
 package com.example.shoesmanagement.service.impls;
 
 import com.example.shoesmanagement.model.Hang;
-import com.example.shoesmanagement.repository.HangRepository;
-import com.example.shoesmanagement.service.HangService;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
