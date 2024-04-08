@@ -53,7 +53,6 @@ public interface CTGViewModelRepository extends JpaRepository< CTGViewModel,UUID
             "AND ctg.trangThai = 0 " +
             "GROUP BY ctg.giay.idGiay, g.tenGiay, ctg.mauSac.tenMau, a.url1, g.namNhapHang")
     List<CTGViewModel> getAllInActive();
-
     @Query("SELECT NEW com.example.shoesmanagement.viewModel.CTGViewModel(" +
             "ctg.giay.idGiay, ctg.mauSac.idMau, MIN(ctg.soTienTruocKhiGiam), MIN(ctg.giaBan), g.tenGiay, ctg.mauSac.tenMau, SUM(ctg.soLuong), a.url1 , COALESCE(SUM(cthd.soLuong), 0), g.namNhapHang)" +
             "FROM ChiTietGiay ctg " +
@@ -156,4 +155,13 @@ public interface CTGViewModelRepository extends JpaRepository< CTGViewModel,UUID
             "GROUP BY ctg.giay.idGiay, ctg.mauSac.idMau, g.tenGiay, ctg.mauSac.tenMau, a.url1, g.namNhapHang "+
             "ORDER BY COALESCE(SUM(cthd.soLuong), 0) DESC")
     List<CTGViewModel> getAllOrderBestSeller();
+
+    public class Main {
+
+        public static void main(String[] args){
+
+            System.out.println();
+        }
+
+    }
 }

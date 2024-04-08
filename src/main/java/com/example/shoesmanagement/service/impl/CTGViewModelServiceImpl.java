@@ -35,6 +35,8 @@ public class CTGViewModelServiceImpl implements CTGViewModelService {
         return ctgViewModelRepository.getAllOutOfStock();
     }
 
+
+
     @Override
     public CTGViewModel findByIDGiayAndMau(UUID idGiay, UUID idMau) {
         return ctgViewModelRepository.findByGiay(idGiay, idMau);
