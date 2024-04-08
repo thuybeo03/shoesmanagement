@@ -1,6 +1,9 @@
 package com.example.shoesmanagement.service;
 
+
 import com.example.shoesmanagement.model.MauSac;
+
+import java.io.InputStream;
 
 import java.util.List;
 import java.util.UUID;
@@ -19,5 +22,6 @@ public interface MauSacService {
 
     public List<MauSac> filterMauSac(String maMau, String tenMau);
 
-//    public void importDataFromExcel(InputStream excelFile);
+    public void importDataFromExcel(InputStream excelFile);
+
 }
