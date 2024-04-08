@@ -1,7 +1,5 @@
 package com.example.shoesmanagement.controller;
 
-import com.example.shoesmanagement.config.ExcelExporterHinhAnh;
-import com.example.shoesmanagement.config.PDFExporterHinhAnh;
 import com.example.shoesmanagement.model.HinhAnh;
 import com.example.shoesmanagement.repository.HinhAnhRepository;
 import com.example.shoesmanagement.service.GiayService;
@@ -228,39 +226,6 @@ public class HinhAnhController {
         model.addAttribute("hinhAnhAll", hinhAnhService.getAllHinhAnh());
 
         return "manage/hinh-anh";
-    }
-
-    @GetMapping("/hinhAnh/export/pdf")
-    public void exportToPDFHinhAnh(HttpServletResponse response) throws DocumentException, IOException {
-        response.setContentType("application/pdf");
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-        String currentDateTime = dateFormatter.format(new Date());
-
-        String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=hinhAnh_" + currentDateTime + ".pdf";
-        response.setHeader(headerKey, headerValue);
-
-        List<HinhAnh> listHinhAnh = hinhAnhService.getAllHinhAnh();
-
-        PDFExporterHinhAnh exporter = new PDFExporterHinhAnh(listHinhAnh);
-        exporter.export(response);
-    }
-
-    @GetMapping("/hinhAnh/export/excel")
-    public void exportToExcelSize(HttpServletResponse response) throws IOException {
-        response.setContentType("application/octet-stream");
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-        String currentDateTime = dateFormatter.format(new Date());
-
-        String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=hinhAnh_" + currentDateTime + ".xlsx";
-        response.setHeader(headerKey, headerValue);
-
-        List<HinhAnh> lisHinhAnh = hinhAnhService.getAllHinhAnh();
-
-        ExcelExporterHinhAnh excelExporter = new ExcelExporterHinhAnh(lisHinhAnh);
-
-        excelExporter.export(response);
     }
 
 }

@@ -1,7 +1,5 @@
 package com.example.shoesmanagement.controller;
 
-import com.example.shoesmanagement.config.ExcelExporterGiay;
-import com.example.shoesmanagement.config.PDFExporterGiay;
 import com.example.shoesmanagement.model.*;
 import com.example.shoesmanagement.repository.ChatLieuRepository;
 import com.example.shoesmanagement.repository.GiayRepository;
@@ -274,38 +272,6 @@ public class GiayController {
         return "redirect:/manage/giay/viewAdd";
     }
 
-    @GetMapping("/giay/export/pdf")
-    public void exportToPDFGiay(HttpServletResponse response) throws DocumentException, IOException {
-        response.setContentType("application/pdf");
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-        String currentDateTime = dateFormatter.format(new Date());
-
-        String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=giay_" + currentDateTime + ".pdf";
-        response.setHeader(headerKey, headerValue);
-
-        List<Giay> listGiay = giayService.getAllGiay();
-
-        PDFExporterGiay exporter = new PDFExporterGiay(listGiay);
-        exporter.export(response);
-    }
-
-    @GetMapping("/giay/export/excel")
-    public void exportToExcelSize(HttpServletResponse response) throws IOException {
-        response.setContentType("application/octet-stream");
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-        String currentDateTime = dateFormatter.format(new Date());
-
-        String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=giay_" + currentDateTime + ".xlsx";
-        response.setHeader(headerKey, headerValue);
-
-        List<Giay> lisGiay = giayService.getAllGiay();
-
-        ExcelExporterGiay excelExporter = new ExcelExporterGiay(lisGiay);
-
-        excelExporter.export(response);
-    }
 
     @GetMapping("/giay/filter")
     public String searchGiay(Model model, @RequestParam(name = "searchTerm") String searchTerm) {
