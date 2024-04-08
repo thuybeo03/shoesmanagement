@@ -46,12 +46,6 @@ public class GiayController {
     private HinhAnhService hinhAnhService;
 
     @Autowired
-    private SizeService sizeService;
-
-    @Autowired
-    private MauSacService mauSacService;
-
-    @Autowired
     private HttpSession session;
 
     @Autowired
