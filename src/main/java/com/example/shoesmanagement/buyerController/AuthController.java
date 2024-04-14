@@ -7,6 +7,7 @@ import com.example.shoesmanagement.service.KhachHangService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,7 +52,7 @@ public class AuthController {
         return "redirect:/buyer/";
     }
     @PostMapping("/login")
-    private String buyerLogin(Model model, HttpSession session) throws MessagingException {
+    public ResponseEntity<String> buyerLogin(Model model, HttpSession session) throws MessagingException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String EMAIL_REGEX = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
@@ -66,7 +67,7 @@ public class AuthController {
                     model.addAttribute("fullNameLogin", fullName);
                     session.setAttribute("KhachHangLogin", khachHang);
                     session.setAttribute("GHLogged", gh);
-                    return "redirect:/buyer/";
+                    return ResponseEntity.ok("Login thanh cong");
                 }
                 GioHang gioHang = new GioHang();
                 gioHang.setKhachHang(khachHang);
@@ -75,15 +76,13 @@ public class AuthController {
                 gioHangService.saveGH(gioHang);
                 session.setAttribute("KhachHangLogin", khachHang);
                 session.setAttribute("GHLogged", gioHang);
-                return "redirect:/buyer";
+                return ResponseEntity.ok("Login thanh cong");
 
             } else {
-                model.addAttribute("messageLogin", "Usernam and Password incorrect");
-                return "online/login";
+                return ResponseEntity.ok("Tk and mk sai");
             }
         } else {
-            model.addAttribute("messageLogin", "Username and Password  incorrect");
-            return "online/login";
+            return ResponseEntity.ok("Tk and mk sai");
         }
     }
     @PostMapping("/register")

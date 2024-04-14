@@ -11,5 +11,11 @@ public interface GiayChiTietService {
 
     public List<ChiTietGiay> getTop4ChiTietGiay();
 
+    List<ChiTietGiay> findByGiayAndMau(Giay giay, MauSac mauSac);
+
+    List<ChiTietGiay> findByMauSacAndGiay(MauSac mauSac, Giay giay, int trangThai);
+
+
+    HinhAnh hinhAnhByGiayAndMau(Giay giay, MauSac mauSac);
 
 }
