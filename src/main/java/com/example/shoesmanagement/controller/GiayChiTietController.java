@@ -4,31 +4,21 @@ import com.example.shoesmanagement.model.*;
 import com.example.shoesmanagement.repository.*;
 import com.example.shoesmanagement.service.*;
 import com.example.shoesmanagement.service.impl.GiayChiTietServiceImpl;
-import com.lowagie.text.DocumentException;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.springframework.web.servlet.view.RedirectView;
-import org.thymeleaf.util.StringUtils;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @RequestMapping("/manage")
@@ -60,8 +50,7 @@ public class GiayChiTietController {
     private SizeRepository sizeRepository;
     @Autowired
     private HangRepository hangRepository;
-    @Autowired
-    private GiayChiTietServiceImpl giayChiTietServiceImpl;
+
 
     @ModelAttribute("dsTrangThai")
     public Map<Integer, String> getDsTrangThai() {
