@@ -74,7 +74,7 @@ h6 {
 }
 
 p {
-	font-size: 15px;
+	font-size: 14px;
 	font-family: "Nunito Sans", sans-serif;
 	color: #3d3d3d;
 	font-weight: 400;
@@ -320,7 +320,7 @@ ol {
 }
 
 .header__top {
-	background: #111111;
+	background: #dd182c;
 	padding: 10px 0;
 }
 
@@ -564,8 +564,9 @@ ol {
 }
 
 .hero__slider.owl-carousel .owl-item.active .hero__text .primary-btn {
-	top: 0;
+	top: 250px;
 	opacity: 1;
+	margin-left: -200px;
 }
 
 .hero__slider.owl-carousel .owl-nav button {
