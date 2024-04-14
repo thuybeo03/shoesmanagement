@@ -4,6 +4,7 @@ import com.example.shoesmanagement.model.*;
 import com.example.shoesmanagement.repository.*;
 import com.example.shoesmanagement.service.GHCTService;
 import com.example.shoesmanagement.service.GiayChiTietService;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
@@ -14,6 +15,15 @@ import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+
+@Service
+public class GiayChiTietServiceImpl implements GiayChiTietService {
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class GiayChiTietServiceImpl implements GiayChiTietService {
@@ -39,13 +49,16 @@ public class GiayChiTietServiceImpl implements GiayChiTietService {
     @Autowired
     private GHCTService ghctService;
 
+
     @Override
     public List<ChiTietGiay> getAllChiTietGiay() {
         return giayChiTietRepository.findAllByOrderByTgThemDesc();
+
     }
 
     @Override
     public List<ChiTietGiay> getTop4ChiTietGiay() {
+
         List<ChiTietGiay> allChiTietGiay = giayChiTietRepository.findAllByOrderByTgThemDesc();
         int limit = 4;
         if (allChiTietGiay.size() <= limit) {
@@ -103,6 +116,23 @@ public class GiayChiTietServiceImpl implements GiayChiTietService {
     @Override
     public List<ChiTietGiay> isDuplicateChiTietGiay(UUID giayId, UUID sizeId, UUID mauSacId, UUID hinhAnhId) {
         return giayChiTietRepository.findByGiayAndSizeAndMauSacAndHinhAnh(giayId, sizeId, mauSacId, hinhAnhId);
+
+        return null;
+    }
+
+    @Override
+    public HinhAnh hinhAnhByGiayAndMau(Giay giay, MauSac mauSac) {
+        return giayChiTietRepository.findDistinctByGiay(giay, mauSac);
+    }
+
+    @Override
+    public List<ChiTietGiay> findByGiayAndMau(Giay giay, MauSac mauSac) {
+        return giayChiTietRepository.findByGiayAndMauSac(giay, mauSac);
+    }
+    @Override
+    public List<ChiTietGiay> findByMauSacAndGiay(MauSac mauSac, Giay giay, int trangThai) {
+        return giayChiTietRepository.findByMauSacAndGiayAndTrangThai(mauSac, giay, trangThai);
+
     }
 
 

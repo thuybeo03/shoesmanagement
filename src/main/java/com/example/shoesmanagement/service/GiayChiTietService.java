@@ -13,6 +13,7 @@ public interface GiayChiTietService {
 
     public List<ChiTietGiay> getTop4ChiTietGiay();
 
+
     public List<ChiTietGiay> getCTGByGIayActive(Giay giay);
 
     public void save(ChiTietGiay chiTietGiay);
@@ -33,6 +34,14 @@ public interface GiayChiTietService {
     public List<ChiTietGiay> getCTGByGiay(Giay giay);
 
     List<ChiTietGiay> isDuplicateChiTietGiay(UUID giayId, UUID sizeId, UUID mauSacId, UUID hinhAnhId);
+
+
+    List<ChiTietGiay> findByGiayAndMau(Giay giay, MauSac mauSac);
+
+    List<ChiTietGiay> findByMauSacAndGiay(MauSac mauSac, Giay giay, int trangThai);
+
+
+    HinhAnh hinhAnhByGiayAndMau(Giay giay, MauSac mauSac);
 
 
 }
