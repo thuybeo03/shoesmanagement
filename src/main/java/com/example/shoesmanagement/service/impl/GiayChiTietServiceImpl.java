@@ -17,16 +17,32 @@ import java.util.UUID;
 
 @Service
 public class GiayChiTietServiceImpl implements GiayChiTietService {
+
     @Autowired
     private GiayChiTietRepository giayChiTietRepository;
 
     @Autowired
-    private GHCTService ghctService;
+    private GiayRepository giayRepository;
 
+    @Autowired
+    private SizeRepository sizeRepository;
+
+    @Autowired
+    private MauSacRepository mauSacRepository;
+
+    @Autowired
+    private HinhAnhRepository hinhAnhRepository;
+
+    @Autowired
+    private HangRepository hangRepository;
+
+    @Autowired
+    private GHCTService ghctService;
 
     @Override
     public List<ChiTietGiay> getAllChiTietGiay() {
-        return giayChiTietRepository.findAllByOrderByTgThemDesc();    }
+        return giayChiTietRepository.findAllByOrderByTgThemDesc();
+    }
 
     @Override
     public List<ChiTietGiay> getTop4ChiTietGiay() {
@@ -37,6 +53,11 @@ public class GiayChiTietServiceImpl implements GiayChiTietService {
         } else {
             return allChiTietGiay.subList(0, limit);
         }
+    }
+
+    @Override
+    public List<ChiTietGiay> getCTGByGIayActive(Giay giay) {
+        return giayChiTietRepository.findByTrangThaiAndGiay(1, giay);
     }
 
     @Override

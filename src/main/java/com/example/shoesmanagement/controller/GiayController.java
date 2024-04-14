@@ -430,7 +430,7 @@ public class GiayController {
         model.addAttribute("giayList", giayList);
         model.addAttribute("sizeList", sizeList);
         model.addAttribute("mauSacList", mauSacList);
-        //
+
         if (message == null || !"true".equals(message)) {
             model.addAttribute("message", false);
         }

@@ -8,9 +8,12 @@ import java.util.List;
 import java.util.UUID;
 
 public interface GiayChiTietService {
+
     public List<ChiTietGiay> getAllChiTietGiay();
 
     public List<ChiTietGiay> getTop4ChiTietGiay();
+
+    public List<ChiTietGiay> getCTGByGIayActive(Giay giay);
 
     public void save(ChiTietGiay chiTietGiay);
 
