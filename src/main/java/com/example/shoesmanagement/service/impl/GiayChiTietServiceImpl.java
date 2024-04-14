@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class GiayChiTietImpl implements GiayChiTietService {
+public class GiayChiTietServiceImpl implements GiayChiTietService {
     @Autowired
     private GiayChiTietRepository giayChiTietRepository;
 
