@@ -4,7 +4,6 @@ import com.example.shoesmanagement.model.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,6 +11,7 @@ import java.util.UUID;
 
 @Repository
 public interface GiayChiTietRepository extends JpaRepository<ChiTietGiay, UUID> {
+
     List<ChiTietGiay> findByGiay(Giay giay);
 
     List<ChiTietGiay> findByTrangThaiAndGiay(int trangThai, Giay giay);
@@ -20,6 +20,20 @@ public interface GiayChiTietRepository extends JpaRepository<ChiTietGiay, UUID> 
     HinhAnh findDistinctByGiay(Giay giay, MauSac mauSac);
     List<ChiTietGiay> findByMauSacAndGiayAndTrangThai(MauSac mauSac, Giay giay, int trangThai);
 
+
+    List<ChiTietGiay> findBySize(Size size);
+
+    List<ChiTietGiay> findByMauSac(MauSac mauSac);
+
+    List<ChiTietGiay> findAllByOrderByTgThemDesc();
+
+    @Query("SELECT c FROM ChiTietGiay c WHERE c.giay.idGiay = :giayId AND c.size.idSize = :sizeId AND c.mauSac.idMau = :mauSacId AND c.hinhAnh.idHinhAnh = :hinhAnhId")
+    List<ChiTietGiay> findByGiayAndSizeAndMauSacAndHinhAnh(
+            @Param("giayId") UUID giayId,
+            @Param("sizeId") UUID sizeId,
+            @Param("mauSacId") UUID mauSacId,
+            @Param("hinhAnhId") UUID hinhAnhId
+    );
 
 
 }

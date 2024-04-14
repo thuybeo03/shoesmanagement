@@ -27,8 +27,6 @@ public class HomeController {
     @Autowired
     private GHCTService ghctService;
 
-    @Autowired
-    private GiayChiTietService giayChiTietService;
 
     @RequestMapping(value = {"", "/", "/home"})
     public String hone(Model model){
