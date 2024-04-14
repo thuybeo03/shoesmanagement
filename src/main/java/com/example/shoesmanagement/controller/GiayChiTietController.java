@@ -50,7 +50,8 @@ public class GiayChiTietController {
     private SizeRepository sizeRepository;
     @Autowired
     private HangRepository hangRepository;
-
+    @Autowired
+    private GiayChiTietServiceImpl giayChiTietServiceImpl;
 
     @ModelAttribute("dsTrangThai")
     public Map<Integer, String> getDsTrangThai() {
