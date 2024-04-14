@@ -1,15 +1,10 @@
 package com.example.shoesmanagement.controller;
 
-import com.example.shoesmanagement.model.ChatLieu;
-import com.example.shoesmanagement.model.Giay;
-import com.example.shoesmanagement.model.Hang;
+import com.example.shoesmanagement.model.*;
 import com.example.shoesmanagement.repository.ChatLieuRepository;
 import com.example.shoesmanagement.repository.GiayRepository;
 import com.example.shoesmanagement.repository.HangRepository;
-import com.example.shoesmanagement.service.ChatLieuService;
-import com.example.shoesmanagement.service.GiayService;
-import com.example.shoesmanagement.service.HangService;
-import com.example.shoesmanagement.service.HinhAnhService;
+import com.example.shoesmanagement.service.*;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +39,16 @@ public class GiayController {
     private HinhAnhService hinhAnhService;
 
     @Autowired
+    private GiayChiTietService giayChiTietService;
+
+    @Autowired
     private HttpSession session;
+
+    @Autowired
+    private SizeService sizeService;
+
+    @Autowired
+    private MauSacService mauSacService;
 
     @Autowired
     private GiayRepository giayRepository;
@@ -272,7 +276,168 @@ public class GiayController {
         return "redirect:/manage/giay/viewAdd";
     }
 
+    @GetMapping("/giay/delete/{id}")
+    public String deleteGiay(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
+        Giay giay = giayService.getByIdGiay(id);
+        giay.setTrangThai(0);
+        giay.setTgSua(new Date());
+        giayService.save(giay);
+        List<ChiTietGiay> chiTietGiays = giayChiTietService.findByGiay(giay);
+        for (ChiTietGiay chiTietGiay : chiTietGiays) {
+            chiTietGiay.setTrangThai(0);
+            giayChiTietService.save(chiTietGiay);
+        }
+        //
+        redirectAttributes.addFlashAttribute("message", true);
+        return "redirect:/manage/giay";
+    }
+    public void deleteGiayById(UUID idGiay) {
+        Giay giay = giayService.getByIdGiay(idGiay);
+        giay.setTrangThai(0);
+        giay.setTgSua(new Date());
+        giayService.save(giay);
+        // Cập nhật trạng thái của tất cả sản phẩm chi tiết của giay thành 0
+        List<ChiTietGiay> chiTietGiays = giayChiTietService.findByGiay(giay);
+        for (ChiTietGiay chiTietGiay : chiTietGiays) {
+            chiTietGiay.setTrangThai(0);
+            giayChiTietService.save(chiTietGiay);
+        }
+    }
 
+    @GetMapping("/giay/viewUpdate/{id}")
+    public String viewUpdateGiay(@PathVariable UUID id, Model model
+            , @ModelAttribute("maGiayError") String maGiayError
+            , @ModelAttribute("tenGiayError") String tenGiayError
+            , @ModelAttribute("hangError") String hangError
+            , @ModelAttribute("chatLieuError") String chatLieuError
+            , @ModelAttribute("errorGiay") String errorGiay, @ModelAttribute("userInput") Giay userInputGiay
+            , @ModelAttribute("Errormessage") String Errormessage) {
+        Giay giay = giayService.getByIdGiay(id);
+        model.addAttribute("giay", giay);
+        //
+        List<Hang> hangList = hangService.getALlHang();
+        Collections.sort(hangList, (a, b) -> b.getTgThem().compareTo(a.getTgThem()));
+        model.addAttribute("hang", hangList);
+        //
+        List<ChatLieu> chatLieuList = chatLieuService.getAllChatLieu();
+        Collections.sort(chatLieuList, (a, b) -> b.getTgThem().compareTo(a.getTgThem()));
+        model.addAttribute("chatLieu", chatLieuList);
+        //
+        model.addAttribute("hangAdd", new Hang());
+        model.addAttribute("chatLieuAdd", new ChatLieu());
+        //
+        if (maGiayError == null || !"maGiayError".equals(errorGiay)) {
+            model.addAttribute("maGiayError", false);
+        }
+        if (tenGiayError == null || !"tenGiayError".equals(errorGiay)) {
+            model.addAttribute("tenGiayError", false);
+        }
+        if (hangError == null || !"hangError".equals(errorGiay)) {
+            model.addAttribute("hangError", false);
+        }
+        if (chatLieuError == null || !"chatLieuError".equals(errorGiay)) {
+            model.addAttribute("chatLieuError", false);
+        }
+        // Kiểm tra xem có dữ liệu người dùng đã nhập không và điền lại vào trường nhập liệu
+        if (userInputGiay != null) {
+            model.addAttribute("giayUpdate", userInputGiay);
+        }
+        //
+        session.setAttribute("id", id);
+        //
+        if (Errormessage == null || !"true".equals(Errormessage)) {
+            model.addAttribute("Errormessage", false);
+        }
+        return "manage/update-giay";
+    }
+
+    @PostMapping("/giay/viewUpdate/{id}")
+    public String updateGiay(@PathVariable UUID id, @Valid @ModelAttribute("giay") Giay giay, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+        Giay giayDb = giayService.getByIdGiay(id);
+        UUID idGiay = (UUID) session.getAttribute("id");
+        String link = "redirect:/manage/giay/viewUpdate/" + idGiay;
+        if (bindingResult.hasErrors()) {
+            if (bindingResult.hasFieldErrors("maGiay")) {
+                redirectAttributes.addFlashAttribute("userInput", giay);
+                redirectAttributes.addFlashAttribute("errorGiay", "maGiayError");
+            }
+            if (bindingResult.hasFieldErrors("tenGiay")) {
+                redirectAttributes.addFlashAttribute("userInput", giay);
+                redirectAttributes.addFlashAttribute("errorGiay", "tenGiayError");
+            }
+            if (bindingResult.hasFieldErrors("hang")) {
+                redirectAttributes.addFlashAttribute("userInput", giay);
+                redirectAttributes.addFlashAttribute("errorGiay", "hangError");
+            }
+            if (bindingResult.hasFieldErrors("chatLieu")) {
+                redirectAttributes.addFlashAttribute("userInput", giay);
+                redirectAttributes.addFlashAttribute("errorGiay", "chatLieuError");
+            }
+            return link;
+        }
+        //
+        Giay existingGiay = giayRepository.findByMaGiay(giay.getMaGiay());
+        if (existingGiay != null && !existingGiay.getIdGiay().equals(id)) {
+            redirectAttributes.addFlashAttribute("userInput", giay);
+            redirectAttributes.addFlashAttribute("Errormessage", true);
+            return link;
+        }
+        //
+        if (giayDb != null) {
+            giayDb.setMaGiay(giay.getMaGiay());
+            giayDb.setMoTa(giay.getMoTa());
+            giayDb.setTenGiay(giay.getTenGiay());
+            giayDb.setTgSua(new Date());
+            giayDb.setTrangThai(giay.getTrangThai());
+            giayDb.setChatLieu(giay.getChatLieu());
+            giayDb.setHang(giay.getHang());
+            giayService.save(giayDb);
+            redirectAttributes.addFlashAttribute("message", true);
+        }
+        // Nếu trạng thái của giay là 1, hãy cập nhật trạng thái của tất cả sản phẩm chi tiết của giay thành 1.
+        if (giayDb.getTrangThai() == 1) {
+            List<ChiTietGiay> chiTietGiays = giayChiTietService.findByGiay(giayDb);
+            for (ChiTietGiay chiTietGiay : chiTietGiays) {
+                chiTietGiay.setTrangThai(1);
+                giayChiTietService.save(chiTietGiay);
+            }
+        }
+        return "redirect:/manage/giay";
+    }
+
+    public void updateGiayById(UUID id) {
+        Giay giayDb = giayService.getByIdGiay(id);
+        // Nếu trạng thái của giay là 1, hãy cập nhật trạng thái của tất cả sản phẩm chi tiết của giay thành 1.
+        if (giayDb.getTrangThai() == 1) {
+            List<ChiTietGiay> chiTietGiays = giayChiTietService.findByGiay(giayDb);
+            for (ChiTietGiay chiTietGiay : chiTietGiays) {
+                chiTietGiay.setTrangThai(1);
+                giayChiTietService.save(chiTietGiay);
+            }
+        }
+    }
+
+    @GetMapping("/giay/detail/{id}")
+    public String detail(@PathVariable UUID id, Model model, @ModelAttribute("message") String message) {
+        Giay giay = giayService.getByIdGiay(id);
+        List<ChiTietGiay> listCTGByGiay = giayChiTietService.getCTGByGiay(giay);
+        Collections.sort(listCTGByGiay, (a, b) -> b.getTgThem().compareTo(a.getTgThem()));
+        model.addAttribute("chiTietGiayList", listCTGByGiay);
+        model.addAttribute("idGiay", id);
+        List<Giay> giayList = giayService.getAllGiay();
+        List<Size> sizeList = sizeService.getAllSize();
+        List<MauSac> mauSacList = mauSacService.getALlMauSac();
+        model.addAttribute("giayList", giayList);
+        model.addAttribute("sizeList", sizeList);
+        model.addAttribute("mauSacList", mauSacList);
+        //
+        if (message == null || !"true".equals(message)) {
+            model.addAttribute("message", false);
+        }
+        //
+        session.setAttribute("idCTG", id);
+        return "manage/giay-detail";
+    }
     @GetMapping("/giay/filter")
     public String searchGiay(Model model, @RequestParam(name = "searchTerm") String searchTerm) {
         List<Giay> filteredGiays;
